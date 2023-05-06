@@ -22,7 +22,7 @@ const DishForm = (props: InjectedFormProps & HeaderProps) => {
 				{dishTypeValue === 'pizza' && (
 					<>
 						<Field component={inputField} name="no_of_slices" label="# of slices" type="number" required={true} />
-						<Field component={inputField} name="diameter" label="# of slices" type="number" required={true} />
+						<Field component={inputField} name="diameter" label="Diameter" type="number" required={true} />
 					</>
 				)}
 				{dishTypeValue === 'soup' && (
