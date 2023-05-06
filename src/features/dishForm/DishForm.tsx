@@ -6,11 +6,35 @@ import { RootState } from '../../app/store'
 
 const DishForm = (props: InjectedFormProps & HeaderProps) => {
 	const { handleSubmit, pristine, submitting, dishTypeValue, spicinessValue } = props
+
+	const prepTimeFormatter = (value: string, prevValue: string) => {
+		// only format if value didn't change, that's when user unfocused input
+		if (value !== prevValue) return value
+
+		let parts = value.split(':')
+		let s = parts.at(-1) || '00'
+		let m = parts.at(-2) || '00'
+		let h = parts.at(-3) || '00'
+		if (s.length < 2) s = '0' + s
+		if (m.length < 2) m = '0' + m
+		if (h.length < 2) h = '0' + h
+
+		return `${h}:${m}:${s}`
+	}
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<div>
 				<Field component={inputField} name="name" label="Dish Name" type="text" required={true} />
-				<Field component={inputField} name="preparation_time" label="Preparation Time" placeholder="00:00:00" type="text" required={true} />
+				<Field
+					component={inputField}
+					name="preparation_time"
+					label="Preparation Time"
+					type="text"
+					required={true}
+					normalize={prepTimeFormatter}
+					extraHtmlAttributes={{ placeholder: '00:00:00' }}
+				/>
 
 				<Field component={selectField} name="type" label="Dish type" required={true}>
 					<option />
