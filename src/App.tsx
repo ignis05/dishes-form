@@ -10,7 +10,7 @@ function App() {
 
 	return (
 		<div className="appRoot">
-			{res && <FormSubmitted res={res} />}
+			{res && <FormSubmitted />}
 			{!res && <DishForm />}
 		</div>
 	)

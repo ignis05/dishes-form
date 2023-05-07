@@ -1,14 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { reset } from './DishFormResponseSlice'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../app/store'
 import styles from './DishForm.module.css'
 
-type FormSubmittedProps = {
-	res: any
-}
-function FormSubmitted(props: FormSubmittedProps) {
+function FormSubmitted() {
 	const dispatch = useDispatch()
-	const fileds: [string, string][] = Object.entries(props.res)
+	const res = useSelector((state: RootState) => state.dishFormResponse.formResponse)
+	const fileds: [string, string][] = Object.entries(res)
 
 	return (
 		<div className={`${styles.formCard} ${styles.responseCard}`}>
