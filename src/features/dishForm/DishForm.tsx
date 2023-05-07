@@ -3,6 +3,7 @@ import { Field, InjectedFormProps, formValueSelector, reduxForm } from 'redux-fo
 import { inputField, selectField } from './FormComponents'
 import { ConnectedProps, connect } from 'react-redux'
 import { RootState } from '../../app/store'
+import styles from './DishForm.module.css'
 
 const DishForm = (props: InjectedFormProps & HeaderProps) => {
 	const { handleSubmit, pristine, submitting, dishTypeValue, spicinessValue } = props
@@ -23,9 +24,17 @@ const DishForm = (props: InjectedFormProps & HeaderProps) => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className={styles.formCard}>
 			<div>
-				<Field component={inputField} name="name" label="Dish Name" type="text" required={true} />
+				<h2>Dish form</h2>
+				<Field
+					component={inputField}
+					name="name"
+					label="Dish Name"
+					type="text"
+					required={true}
+					extraHtmlAttributes={{ placeholder: 'HexOcean Pizza' }}
+				/>
 				<Field
 					component={inputField}
 					name="preparation_time"

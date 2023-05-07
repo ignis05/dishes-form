@@ -37,7 +37,7 @@ function App() {
 	}
 
 	return (
-		<div>
+		<div className="appRoot">
 			{res && <FormSubmitted res={res} goBack={goBack} />}
 			{!res && <DishForm onSubmit={submitDishForm} />}
 		</div>

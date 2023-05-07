@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './DishForm.module.css'
 
 type FormSubmittedProps = {
 	res: any
@@ -7,17 +8,21 @@ type FormSubmittedProps = {
 function FormSubmitted(props: FormSubmittedProps) {
 	const fileds: [string, string][] = Object.entries(props.res)
 	return (
-		<div>
+		<div className={`${styles.formCard} ${styles.responseCard}`}>
 			<h2>Your response has been submitted!</h2>
 			<div>
-				{fileds.map((f) => {
-					return (
-						<div key={f[0]}>
-							<span>{f[0]}:</span>
-							<span style={{ color: 'green' }}>{f[1]}</span>
-						</div>
-					)
-				})}
+				<table>
+					<tbody>
+						{fileds.map((f) => {
+							return (
+								<tr key={f[0]}>
+									<td>{f[0]}:</td>
+									<td style={{ color: 'green' }}>{f[1]}</td>
+								</tr>
+							)
+						})}
+					</tbody>
+				</table>
 			</div>
 			<button onClick={(e) => props.goBack()}>Back to form</button>
 		</div>

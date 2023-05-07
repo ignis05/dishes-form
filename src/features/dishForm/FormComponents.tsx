@@ -10,9 +10,9 @@ type inputFieldProps = {
 const inputField = ({ input, label, type, required, meta, extraHtmlAttributes }: inputFieldProps & WrappedFieldProps) => (
 	<div>
 		<label>{label}</label>
-		<div className="">
+		<div>
 			<input {...input} type={type} {...extraHtmlAttributes} required={required} />
-			{meta.touched && meta.error && <span>{meta.error}</span>}
+			{meta.touched && meta.error && <div style={{ color: 'red' }}>* {meta.error}</div>}
 		</div>
 	</div>
 )
@@ -25,11 +25,11 @@ type selectFieldProps = {
 const selectField = ({ input, label, required, meta, children }: selectFieldProps & WrappedFieldProps) => (
 	<div>
 		<label>{label}</label>
-		<div className="">
+		<div>
 			<select {...input} required={required}>
 				{children}
 			</select>
-			{meta.touched && meta.error && <span>{meta.error}</span>}
+			{meta.touched && meta.error && <div style={{ color: 'red' }}>* {meta.error}</div>}
 		</div>
 	</div>
 )
