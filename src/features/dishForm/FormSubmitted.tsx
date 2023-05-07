@@ -1,12 +1,15 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { reset } from './DishFormResponseSlice'
 import styles from './DishForm.module.css'
 
 type FormSubmittedProps = {
 	res: any
-	goBack: Function
 }
 function FormSubmitted(props: FormSubmittedProps) {
+	const dispatch = useDispatch()
 	const fileds: [string, string][] = Object.entries(props.res)
+
 	return (
 		<div className={`${styles.formCard} ${styles.responseCard}`}>
 			<h2>Your response has been submitted!</h2>
@@ -24,7 +27,7 @@ function FormSubmitted(props: FormSubmittedProps) {
 					</tbody>
 				</table>
 			</div>
-			<button onClick={(e) => props.goBack()}>Back to form</button>
+			<button onClick={(e) => dispatch(reset())}>Back to form</button>
 		</div>
 	)
 }

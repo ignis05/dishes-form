@@ -1,12 +1,39 @@
 import React from 'react'
-import { Field, InjectedFormProps, formValueSelector, reduxForm } from 'redux-form'
-import { inputField, selectField } from './FormComponents'
-import { ConnectedProps, connect } from 'react-redux'
+import axios from 'axios'
+import { ConnectedProps, connect, useDispatch } from 'react-redux'
+import { Field, InjectedFormProps, SubmissionError, formValueSelector, reduxForm } from 'redux-form'
 import { RootState } from '../../app/store'
+import { set } from './DishFormResponseSlice'
+import { inputField, selectField } from './FormComponents'
 import styles from './DishForm.module.css'
 
 const DishForm = (props: InjectedFormProps & HeaderProps) => {
 	const { handleSubmit, pristine, submitting, dishTypeValue, spicinessValue } = props
+	const dispatch = useDispatch()
+
+	const submit = async (data: any) => {
+		// leave only fields matching dish type
+		const cleanData: any = { name: data.name, preparation_time: data.preparation_time, type: data.type }
+		switch (data.type) {
+			case 'pizza':
+				cleanData.no_of_slices = data.no_of_slices
+				cleanData.diameter = data.diameter
+				break
+			case 'soup':
+				cleanData.spiciness_scale = data.spiciness_scale || 6 // default value of range input
+				break
+			case 'sandwich':
+				cleanData.slices_of_bread = data.slices_of_bread
+				break
+		}
+		// throw any validation errors or dispatch positive server reponse
+		let response = await axios.post('https://umzzcc503l.execute-api.us-west-2.amazonaws.com/dishes/', cleanData).catch((err) => {
+			if (!err.response.data) throw err
+			throw new SubmissionError(err.response.data)
+		})
+		if (!response) return
+		dispatch(set(response.data))
+	}
 
 	const prepTimeFormatter = (value: string, prevValue: string) => {
 		// only format if value didn't change, that's when user unfocused input
@@ -24,7 +51,7 @@ const DishForm = (props: InjectedFormProps & HeaderProps) => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className={styles.formCard}>
+		<form onSubmit={handleSubmit(submit)} className={styles.formCard}>
 			<div>
 				<h2>Dish form</h2>
 				<Field
@@ -62,7 +89,7 @@ const DishForm = (props: InjectedFormProps & HeaderProps) => {
 					<Field
 						component={inputField}
 						name="spiciness_scale"
-						label={`Spiciness scale (1-10): ${spicinessValue || ''}`}
+						label={`Spiciness scale (1-10): ${spicinessValue || '6'}`}
 						type="range"
 						extraHtmlAttributes={{ min: 1, max: 10 }}
 						required={true}

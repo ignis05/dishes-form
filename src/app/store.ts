@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { reducer as formReducer } from 'redux-form'
+import dishFormResponseReducer from '../features/dishForm/DishFormResponseSlice'
 
 export const store = configureStore({
 	reducer: {
 		form: formReducer,
+		dishFormResponse: dishFormResponseReducer,
 	},
 })
 
