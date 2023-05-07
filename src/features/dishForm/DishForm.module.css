@@ -53,3 +53,8 @@
 .responseCard table {
 	width: 80%;
 }
+
+.formErrorField {
+	color: red;
+	max-width: 300px;
+}

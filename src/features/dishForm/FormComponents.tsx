@@ -1,5 +1,6 @@
 import { HTMLInputTypeAttribute } from 'react'
 import { WrappedFieldProps } from 'redux-form'
+import styles from './DishForm.module.css'
 
 type inputFieldProps = {
 	label: string
@@ -12,7 +13,7 @@ const inputField = ({ input, label, type, required, meta, extraHtmlAttributes }:
 		<label>{label}</label>
 		<div>
 			<input {...input} type={type} {...extraHtmlAttributes} required={required} />
-			{meta.touched && meta.error && <div style={{ color: 'red' }}>* {meta.error}</div>}
+			{meta.touched && meta.error && <div className={styles.formErrorField}>* {meta.error}</div>}
 		</div>
 	</div>
 )
@@ -29,7 +30,7 @@ const selectField = ({ input, label, required, meta, children }: selectFieldProp
 			<select {...input} required={required}>
 				{children}
 			</select>
-			{meta.touched && meta.error && <div style={{ color: 'red' }}>* {meta.error}</div>}
+			{meta.touched && meta.error && <div className={styles.formErrorField}>* {meta.error}</div>}
 		</div>
 	</div>
 )
